@@ -67,7 +67,7 @@ class Decision:
                 score = self.minimax(board, depth + 1, True)
                 board[move] = None
                 if depth == 0:
-                    if score > best_score:
+                    if score < best_score:
                         self.best_action = move
                 best_score = min(score, best_score)
             return best_score
