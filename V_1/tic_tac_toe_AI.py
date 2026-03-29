@@ -31,7 +31,7 @@ class Board:
 class CalculateMove_DSF:
     def __init__(self):
         self.total_steps = 0  # total number of nodes created
-        self.end_branch_nodes = [] # collection terminating states
+        self.end_branch_nodes = [] # store only finished game branches
 
 
     # function that checks if game has ended ot not and assigns ebd game status to nodes
@@ -81,6 +81,7 @@ class CalculateMove_DSF:
     def apply_action(self, state, action):
         move = self.determine_player(state)
         new_state = deepcopy(state)
+        # copy the board first so each branch stays separate
         new_state[action[0], action[1]] = move
         return new_state
 
@@ -110,6 +111,7 @@ class CalculateMove_DSF:
     def get_initial_state_node(end_node):
         node = deepcopy(end_node)
         while True:
+            # walk back until the node is just one move away from the root
             if node.parent.parent is None:
                 return node
             node = node.parent

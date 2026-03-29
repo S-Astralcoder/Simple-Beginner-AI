@@ -1,10 +1,6 @@
-import os
-
 import numpy as np
 import math
 from tabulate import tabulate
-import keyboard
-from copy import deepcopy
 
 
 class Board:
@@ -54,6 +50,7 @@ class Decision:
         if is_maximum:
             best_score = -math.inf
             for move in self.get_moves(board):
+                # try the move, score it, then undo it
                 board[move] = "X"
                 score = self.minimax(board, depth + 1, False)
                 board[move] = None
@@ -65,6 +62,7 @@ class Decision:
         else:
             best_score = math.inf
             for move in self.get_moves(board):
+                # same idea here, but now from the player's side
                 board[move] = "O"
                 score = self.minimax(board, depth + 1, True)
                 board[move] = None
@@ -97,7 +95,7 @@ while True:
         try:
             x = int(input("Enter position x : "))
             y = int(input("Enter position y : "))
-        except TypeError:
+        except ValueError:
             print("Invalid input")
             continue
 
@@ -116,3 +114,10 @@ while True:
         print("Game Ended in a tie!")
         exit(0)
 
+
+"""
+Next version plan : 
+1. make the gameplay more interactive 
+2. update the algorithm to alpha beta pruning
+3. possibly implement difficulty levels
+"""
